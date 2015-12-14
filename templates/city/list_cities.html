@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}List Cities{% endblock %}
+
+{%block content %}
+<div class="row">
+    <div class="col-md-offset-3 col-md-6">
+            <h3>Choose your city</h3>
+            <table class="table table-hover">
+                <tr>
+                    <th>City</th>
+                    <th>Open311 Endpoint</th>
+                    <th colspan="{{ view_types|length }}" >Visualizations</th>
+                </tr>
+                    
+                {% for city in cities %}
+                <tr>
+                    <td><a href="{{ url_for('city_matrix') }}/{{ city.name }}">{{ city.name }}</a></td>
+                    <td>{{ city.open311_endpoint }}</td>
+                    {% for view in view_types %}
+                    <td><a href="{{ url_for('city_matrix') }}/{{ city.name }}/{{ view }}">{{ view }}</a></td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-offset-3 col-md-6">
+        <h3>Add a new city</h3>
+        
+        {% from "_formhelpers.html" import render_field %}
+        
+        <form method="POST" action="{{ url_for('add_city') }}" role="form">
+            
+            {{ form.hidden_tag() }}
+            
+            {{ render_field(form.name, class='form-control') }}
+            
+            {{ render_field(form.open311_endpoint, class='form-control') }}
+            
+            {{ render_field(form.open311_jurisdiction, class='form-control') }}
+
+            <button type="submit" class="btn btn-default btn-lg">Register</button>
+        </form>
+
+        <h3>About Open311</h3>
+        <dl class="dl">
+          <dt>Open311 GeoReport API</dt>
+          <dd>The GeoReport API v2 allows developers to build applications to both view and report issues which government entities like cities are responsible for addressing. These interactions are often referred to as “service requests” or “calls for service” and have traditionally been handled by custom web forms or phone based call centers (sometimes using the 311 phone number or other short-code). The GeoReport API is designed to allow both government and third party developers to create new applications and technologies that can integrate directly with these same official contact centers in any government that supports the standard. The current specification is focused on location-based non-emergency issues such as graffiti, potholes, and street cleaning.</dd>
+        </dl>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %} {{ city.name }} {% endblock %}
+
+{%block content %}
+
+<div class="row">
+    <h3> Showing results for the city of {{ city.name }}</h3>
+        <img src=" {{ url_for('static', filename=city.name+'_'+view_type+'.png') }}" height=600px>
+</div>
+
+<a href="{{ url_for('index') }}" class="btn btn-primary btn-lg" role="button">Back</a></a>
+        
+{% endblock %}

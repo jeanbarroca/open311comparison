@@ -1,0 +1,9 @@
+flask
+pymysql
+flask-sqlalchemy
+flask-script
+flask-wtf
+pandas
+numpy
+matplotlib
+seaborn
